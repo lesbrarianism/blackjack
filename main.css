@@ -1,0 +1,281 @@
+html {
+	background: DimGray;
+	background-color: #343434;
+	color: OldLace;
+	font-family: "Mukta", sans-serif;
+	text-transform: lowercase;
+	text-align: center;
+	font-size: 3.8vw;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#tabletop {
+	background-color: #900500;
+	width: 20rem;
+	height: 13.33rem;
+	margin: auto;
+	position: absolute;
+	left: 17%;
+	top: 50%;
+	transform: translate(-17%, -50%);
+	transform-origin: center center;
+	border: 0.5rem ridge #471c0d;
+	/* border-top-left-radius: horizontal vertical */
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 50% 70%;
+	border-bottom-right-radius: 50% 70%;
+}
+
+#house-name,
+#player1-name,
+#house-score,
+#player1-score {
+	position: absolute;
+	display: flex;
+	left: 50%;
+}
+
+#house-name {
+	top: -21%;
+	transform: translate(-50%, 21%);
+}
+
+#player1-name {
+	top: 121%;
+	transform: translate(-50%, -121%);
+}
+
+#house-cards,
+#player1-cards {
+	position: absolute;
+}
+
+#house-cards {
+	left: 50%;
+	top: 2%;
+	transform: translate(-50%, -2%);
+}
+
+#house-score,
+#player1-score {
+	font-size: 0.8em;
+	color: Orange;
+}
+
+#house-score {
+	top: -12%;
+	transform: translate(-50%, 12%);
+}
+
+#game-status {
+}
+
+#player1-score {
+	top: 112%;
+	transform: translate(-50%, -112%);
+}
+
+#player1-cards {
+	left: 50%;
+	top: 94%;
+	transform: translate(-50%, -94%);
+}
+
+#deck,
+.card {
+	position: relative;
+	display: inline-block;
+	background-color: Beige;
+	border: 0.1rem solid Beige;
+	color: black;
+	height: 3.4rem;
+	width: 2.4rem;
+	border-radius: 10px;
+	font-family: "Mutka", sans-serif;
+	font-size: 0.6rem;
+	text-transform: uppercase;
+	text-align: center;
+	font-weight: bold;
+	box-shadow: -1px 0px 2px 0px rgba(28, 28, 28, 0.5), 2px 2px 2px #460906;
+	margin-right: -1.7rem;
+}
+
+@keyframes deal-card {
+	0% {top: -50%; left: -50%;}
+	50% {top: -25%; left: -25%;}
+	100% {top: 0%; left: 0%;}
+}
+
+.card .top {
+	padding: 0.1rem 0 0 0.1rem;
+	line-height: 0.6rem;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.card .middle {
+	font-size: 1.2rem;
+	line-height: 0.9rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.card .bottom {
+	padding: 0.1rem 0 0 0.1rem;
+	line-height: 0.6rem;
+	transform: rotate(180deg);
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.card:first-child {
+	margin-left: -1.4rem;
+}
+
+#deck {
+	background: Beige;
+	background-color: #5e0c09;
+	box-shadow: 3px 3px 2px #460906;
+	color: BlanchedAlmond;
+	height: 3.4rem;
+	width: 2.4rem;
+	border: 0.1rem solid BlanchedAlmond;
+	position: absolute;
+	left: 1.5%;
+	top: 2%;
+	transform: translate(-1.5%, -2%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1rem;
+}
+
+.clubs,
+.spades {
+	color: black;
+}
+
+.hearts,
+.diamonds {
+	color: red;
+}
+
+#btns {
+	position: absolute;
+	display: inline-flex;
+	flex-direction: column;
+	left: 125%;
+	top: 25%;
+	transform: translate(-125%, -25%);
+}
+
+.btn {
+	background: Black;
+	background-color: #1a1a1a;
+	color: AntiqueWhite;
+	font-family: "Mukta", sans-serif;
+	font-size: 0.8rem;
+	display: inline-block;
+	width: 3rem;
+	height: 1.5rem;
+	border: 0;
+	border-radius: 6%;
+	margin: 0.25rem;
+}
+
+.btn:hover,
+#start:hover {
+	background-color: #2f1208;
+}
+
+.btn:active,
+#start:active {
+	background-color: #471c0d;
+}
+
+/* TO DO: hide text from screen readers */
+.card-back {
+	background-color: #5e0c09;
+	border: 0.1rem solid BlanchedAlmond;
+	margin-right: 0.2rem;
+	z-index: 1;
+	color: transparent;
+	user-select: none;
+}
+
+.hide-btn {
+	display: none;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+	overflow: hidden;
+}
+
+/* Modal Content */
+.modal-content {
+	position: absolute;
+  background-color: #383838;
+	font-size: 3vmax;
+  margin: 0;
+  padding: 0;
+	width: 50%;
+  border: 1px solid #888;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* The Close Button */
+.close {
+  color: #cd0000;
+	position: absolute;
+  right: 15px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modal-btn {
+	justify-content: center;
+	margin: 0;
+	margin-bottom: 30px;
+	padding: 0;
+	font-size: 0.7rem;
+}
+
+@media screen and (min-aspect-ratio: 4/3) {
+	html {
+		font-size: 2.5vw;
+	}
+
+	#tabletop {
+		left: 40%;
+		top: 50%;
+		transform: translate(-40%, -50%);
+	}
+}

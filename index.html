@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blackjack #2 JS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js" async defer></script>
+</head>
+
+<body>
+  <!-- Game area -->
+  <div id="tabletop">
+    <div id="deck">52</div>
+
+    <div id="house-name">House</div>
+    <div id="house-score"></div>
+    <div id="house-cards">
+    </div>
+
+    <div id="game-status"></div>
+
+    <div id="player1-cards">
+    </div>
+    <div id="player1-score"></div>
+    <div id="player1-name">Player</div>
+
+    <div id="btns">
+      <button id="start-btn" class="btn" type="button" name="start-button" onclick="start()">start</button>
+      <button id="hit-btn" class="btn hide-btn" type="button" name="hit-button" onclick="hit(1)">hit</button>
+      <button id="stand-btn" class="btn hide-btn" type="button" name="stand-button" onclick="stand(1)">stand</button>
+      <!-- split() is not functional yet -->
+      <button id="split-btn" class="btn hide-btn" type="button" name="split-button" onclick="split(1)">split</button>
+    </div>
+  </div>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p id="status"></p>
+      <button id="modal-btn" class="btn" type="button" name="modal-button" onclick="start()">restart</button>
+    </div>
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
+
+</body>
+
+</html>
