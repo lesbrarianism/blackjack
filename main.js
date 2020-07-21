@@ -1,3 +1,11 @@
+/* Blackjack by R. M. Ray @ https://github.com/lesbrarianism
+
+This is a grad student project for Advanced Web Applications.  Some code is original, some is modified or intermixed using source codes from:
+- https://www.thatsoftwaredude.com/content/6417/how-to-code-blackjack-using-javascript
+- https://code-boxx.com/javascript-blackjack/ */
+
+"use strict";
+
 var suits = ["spades", "hearts", "diamonds", "clubs"];
 var values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 var deck = [];
@@ -20,13 +28,14 @@ function Player(name, hand, points, stand) {
 }
 
 // PARAM target: 0 for house, 1 for player1
-var house = new Player("House", [], 0, false, false);
-var player1 = new Player("Player", [], 0, false, false);
+var house = new Player("House", [], 0, false);
+var player1 = new Player("Player", [], 0, false);
 players = [house, player1];
 // important: players[0] will be house, and players[1] will be player1, to reflect the PARAM target
 
+// Hide first House card
 function hide(x) {
-  if (x == true) {
+  if (x === true) {
     houseCards.firstElementChild.classList.add("card-back");
   } else {
     houseCards.firstElementChild.classList.remove("card-back");
@@ -53,8 +62,8 @@ function start() {
 
 function createDeck() {
   deck = [];
-  for (let v = values.length - 1; v >= 0; v--) {
-    for (let s = suits.length - 1; s >= 0; s--) {
+  for (var v = values.length - 1; v >= 0; v--) {
+    for (var s = suits.length - 1; s >= 0; s--) {
       var weight = parseInt(values[v]);
       if (values[v] == "J" || values[v] == "Q" || values[v] == "K") {
         weight = 10;
@@ -69,11 +78,11 @@ function createDeck() {
 
 // Random deck shuffle -- Fisher-Yates algorithm
 // https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
+// Switch the values of two random cards
 function shuffle() {
-  // switch the values of two random cards
-  for (let i = deck.length - 1; i >= 0; i--) {
-    let j = Math.floor(Math.random() * i);
-    let temp = deck[i];
+  for (var i = deck.length - 1; i >= 0; i--) {
+    var j = Math.floor(Math.random() * i);
+    var temp = deck[i];
     deck[i] = deck[j];
     deck[j] = temp;
   }
@@ -81,8 +90,7 @@ function shuffle() {
 
 function deal(target) {
   var card = deck.pop();
-  // alternate handing cards to each player
-  // 2 cards each
+
   if (target == 1) {
     player1.hand.push(card);
     renderCard(card, 1);
@@ -146,8 +154,8 @@ function hit(target) {
   if (player1.points == 21) {
     stand(1);
   }
-  if (house.points == 21) {
-    stand(0);
+  if (target == 0) {
+    houseAI();
   }
   check();
 }
@@ -158,7 +166,6 @@ function stand(target) {
     player1.stand = true;
     houseAI();
     getPoints(1);
-    check();
   } else {
     house.stand = true;
     gameOver = true;
@@ -178,27 +185,23 @@ function updateDeck() {
 function getPoints(target) {
   var initPoints = 0;
   var aces = 0;
+
   for (var i = 0; i < players[target].hand.length; i++) {
-    var card = players[target].hand[i].weight;
     initPoints += players[target].hand[i].weight;
 
     if (players[target].hand[i].value == "A") {
       aces++;
     }
-
     var totalPoints = initPoints;
 
     if (aces > 0 && initPoints <= 10) {
       totalPoints += 11;
-      card = 11;
     }
     if (aces > 0 && initPoints == 0) {
       totalPoints += 1;
-      card = 1;
     }
     if (aces > 0 && initPoints > 10) {
       totalPoints += aces;
-      card = 1;
     }
   }
   players[target].points = totalPoints;
@@ -212,13 +215,17 @@ function updateScore(target) {
     document.getElementById("player1-score").innerHTML = "score: " + player1.points;
   }
 
-  if (target == 0 && gameOver == false) {
-    var total = house.points;
-    total -= house.hand[0].weight;
+  if (target == 0 && gameOver === false) {
+    let total = house.points;
+		if (house.hand[0].value == "A") {
+			total -= 11;
+		} else {
+			total -= house.hand[0].weight;
+		}
     document.getElementById("house-score").innerHTML = "score: " + total;
   }
 
-  if (target == 0 && gameOver == true) {
+  if (target == 0 && gameOver === true) {
     document.getElementById("house-score").innerHTML = "score: " + house.points;
   }
 }
@@ -236,11 +243,14 @@ function check() {
   span.onclick = function() {
     modal.style.display = "none";
   }
+
+  // Restart game when the modal button is clicked; close modal
   modalBtn.onclick = function() {
     modal.style.display = "none";
     start();
   }
 
+  // Slightly delay the modal from popping up
   function popup() {
     setTimeout(function() {
       modal.style.display = "block";
@@ -248,37 +258,37 @@ function check() {
   }
 
   // Tie
-  if (house.hand.length == 2 & player1.hand.length == 2 && house.points == 21 && player1.points == 21) {
+  if (house.hand.length == 2 && player1.hand.length == 2 && house.points == 21 && player1.points == 21) {
     winner = 2;
     popup();
     message.innerText = "It's a tie with Blackjacks!";
   }
   // House wins
-  if (winner == null && player1.stand == true && house.hand.length == 2 && house.points == 21) {
+  if (winner === null && player1.stand === true && house.hand.length == 2 && house.points == 21) {
     winner = 0;
     popup();
     message.innerText = "House wins with Blackjack!";
   }
   // Player wins
-  if (winner == null && player1.hand.length == 2 && player1.points == 21) {
+  if (winner === null && player1.hand.length == 2 && player1.points == 21) {
     winner = 1;
     popup();
     message.innerText = "You win with Blackjack!";
   }
   // House busts
-  if (winner == null && player1.stand == true && house.points > 21) {
+  if (winner === null && player1.stand === true && house.points > 21) {
     winner = 1;
     popup();
     message.innerText = "House busts! You win!";
   }
   // Player busts
-  if (winner == null && player1.points > 21) {
+  if (winner === null && player1.points > 21) {
     winner = 0;
     popup();
     message.innerText = "You bust! House wins!";
   }
   // Who has more points?
-  if (winner == null && player1.stand == true && house.stand == true) {
+  if (winner === null && player1.stand === true && house.stand === true) {
     if (house.points > player1.points) {
       winner = 0;
       popup();
@@ -290,11 +300,12 @@ function check() {
     } else {
       winner = 2;
       popup();
-      message.innerText = "It's a tie!"
+      message.innerText = "It's a tie!";
     }
   }
 
-  if (winner != null) {
+  // Show House hand
+  if (winner !== null) {
     gameOver = true;
     hide(false);
     document.getElementById("hit-btn").disabled = true;
@@ -310,21 +321,23 @@ function check() {
   }
 }
 
+// Automated House moves
 function houseAI() {
   while (house.points <= 17) {
     hit(0);
-    check();
   }
-
   if (house.points > 17) {
+    stand(0);
+  }
+  if (house.points == 21) {
     stand(0);
   }
 }
 
+// Check if the element has child nodes; remove them
+// https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes
+// https://www.w3schools.com/jsref/met_node_removechild.asp
 function reset() {
-  // First check that the element has child nodes
-  // https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes
-  // https://www.w3schools.com/jsref/met_node_removechild.asp
   if (player1Cards.hasChildNodes()) {
     let children = player1Cards.childNodes;
 

@@ -105,12 +105,6 @@ body {
 	margin-right: -1.7rem;
 }
 
-@keyframes deal-card {
-	0% {top: -50%; left: -50%;}
-	50% {top: -25%; left: -25%;}
-	100% {top: 0%; left: 0%;}
-}
-
 .card .top {
 	padding: 0.1rem 0 0 0.1rem;
 	line-height: 0.6rem;
